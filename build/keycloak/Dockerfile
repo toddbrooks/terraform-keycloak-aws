@@ -1,7 +1,7 @@
 ##################################################
 # Step 1 - Build an optimized image
 ##################################################
-FROM quay.io/keycloak/keycloak:24.0.1 as builder
+FROM quay.io/keycloak/keycloak:24.0.5 AS builder
 
 # These options can be modified to produce a different
 # optimized build.
@@ -45,7 +45,7 @@ RUN dnf update -y && \
 ###################################################################
 # Step 3 - Copy optimized build and dependencies into running image
 ###################################################################
-FROM quay.io/keycloak/keycloak:24.0.1
+FROM quay.io/keycloak/keycloak:24.0.5
 
 USER root
 COPY --from=ubi-micro-build /mnt/rootfs /
@@ -62,7 +62,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 # Paranoia: Keycloak is not vulnerable to CVE-2021-44228
 # https://github.com/keycloak/keycloak-containers/issues/344
 # https://logging.apache.org/log4j/log4j-2.14.1/manual/configuration.html#SystemProperties
-ENV FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS true
+ENV FORMAT_MESSAGES_PATTERN_DISABLE_LOOKUPS=true
 
 # Port 7800 is used by JDBC_PING by default
 EXPOSE 7800
