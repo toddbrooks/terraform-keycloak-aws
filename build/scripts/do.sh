@@ -7,7 +7,7 @@ DIRNAME=$(dirname "${0}")
 REGION="${AWS_REGION}"
 
 build() {
-  docker build -f "${DIRNAME}/../keycloak/Dockerfile" -t "${IMAGE}:latest" "${DIRNAME}/../keycloak"
+  docker build --platform linux/amd64 -f "${DIRNAME}/../keycloak/Dockerfile" -t "${IMAGE}:latest" "${DIRNAME}/../keycloak"
   docker tag "${IMAGE}:latest" "${REPO}:latest"
 }
 
